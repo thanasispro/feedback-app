@@ -2,9 +2,15 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
-    "eslint": "^9.26.0"
+    "eslint": "^9.26.0",
+    "@types/bun": "latest"
   },
   "dependencies": {
     "firebase-functions": "^6.3.2"
+  },
+  "name": "feedback-board",
+  "private": true,
+  "peerDependencies": {
+    "typescript": "^5"
   }
 }
