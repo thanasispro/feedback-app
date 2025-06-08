@@ -1,8 +1,6 @@
-import React from 'react';
 import clsx from 'clsx';
 
 type ButtonVariant = 'primary' | 'ghost';
-type ButtonSize = 'default' | 'large';
 type ButtonColor = 'purple' | 'blue' | 'orange' | 'gray';
 
 const colorMap: Record<ButtonColor, { base: string }> = {
@@ -16,7 +14,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   icon?: React.ReactNode;
   variant?: ButtonVariant;
-  size?: ButtonSize;
   color?: ButtonColor;
 }
 
@@ -24,7 +21,6 @@ export const Button = ({
   text,
   icon,
   variant = 'primary',
-  size = 'default',
   color = 'purple',
   className,
   ...props
@@ -33,24 +29,18 @@ export const Button = ({
   const base = colorMap[color].base;
 
   const baseStyles =
-    'inline-flex items-center justify-center font-bold tracking-[-0.2px] transition-all duration-150 rounded-[10px] cursor-pointer';
+    'inline-flex items-center justify-center font-bold tracking-[-0.2px] transition-all duration-150 rounded-[10px] px-4 cursor-pointer text-[14px] leading-[20px]';
 
-  const sizeStyles =
-    size === 'large'
-      ? 'w-[158px] h-[53px] text-[14px] leading-[20px]'
-      : 'w-[158px] h-[44px] text-[14px] leading-[20px]';
+  const heightStyles = 'h-[40px] md:h-[44px]';
 
-  const primaryStyles =
-    'hover:opacity-80 hover:text-[#F2F4FE] text-white';
-
-  const ghostStyles =
-    'bg-transparent hover:underline';
+  const primaryStyles = 'hover:opacity-80 hover:text-[#F2F4FE] text-white';
+  const ghostStyles = 'bg-transparent hover:underline';
 
   return (
     <button
       className={clsx(
         baseStyles,
-        sizeStyles,
+        heightStyles,
         isGhost ? ghostStyles : primaryStyles,
         className
       )}
