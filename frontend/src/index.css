@@ -17,3 +17,21 @@
   --color-accent-orange: hsl(14, 83%, 74%);   /* #F49F85 */
   --color-accent-lightblue: hsl(204, 94%, 68%); /* #62BCFA */
 }
+
+@layer utilities {
+  @keyframes scaleUp {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.25);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .animate-scaleUp {
+    animation: scaleUp 150ms ease-in-out;
+  }
+}
