@@ -11,9 +11,14 @@ app.use(express.json());
 
 // GET all feedback items
 app.get('/feedback', async (_req: Request, res: Response) => {
-  const snapshot = await db.collection('feedback').get();
-  const feedbacks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  res.json(feedbacks);
+  try {
+    const snapshot = await db.collection('feedback').get();
+    const feedbacks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    res.json(feedbacks);
+  } catch (err) {
+    console.error('Error fetching feedback:', err);
+    res.status(500).send('Server error');
+  }
 });
 
 // POST new feedback
