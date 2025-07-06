@@ -1,0 +1,29 @@
+version: 1
+backend:
+  phases:
+    preBuild:
+      commands:
+        - npm i -g bun
+      build:
+        commands:
+          - '# Execute Amplify CLI with the helper script'
+          - amplifyPush --simple
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - curl -fsSL https://bun.sh/install | bash
+        - export BUN_INSTALL="$HOME/.bun"
+        - export PATH="$BUN_INSTALL/bin:$PATH"
+        - bun install
+    build:
+      commands:
+        - bun run build
+  artifacts:
+    baseDirectory: dist  # or build or whatever your output dir is
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - bun.lock
