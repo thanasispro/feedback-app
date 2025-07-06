@@ -4,10 +4,10 @@ backend:
     preBuild:
       commands:
         - npm i -g bun
-      build:
-        commands:
-          - '# Execute Amplify CLI with the helper script'
-          - amplifyPush --simple
+    build:
+      commands:
+        - amplifyPush --simple
+
 frontend:
   phases:
     preBuild:
@@ -16,13 +16,16 @@ frontend:
         - export BUN_INSTALL="$HOME/.bun"
         - export PATH="$BUN_INSTALL/bin:$PATH"
         - bun install
+        - npx @aws-amplify/plugin-output generate
     build:
       commands:
         - bun run build
+
   artifacts:
-    baseDirectory: dist  # or build or whatever your output dir is
+    baseDirectory: dist  # or build, depending on your app
     files:
       - '**/*'
+
   cache:
     paths:
       - node_modules/**/*
