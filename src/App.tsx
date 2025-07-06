@@ -1,97 +1,64 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
+import { Amplify } from 'aws-amplify';
+import { generateClient } from 'aws-amplify/data';
+import type { Schema } from '../amplify/data/resource';
+import outputs from '../amplify_outputs.json';
 
-type Feedback = {
-  id: string;
-  title: string;
-  category: string;
-  description: string;
-  status: string;
-  upvotes: number;
-  commentsCount: number;
-};
+Amplify.configure(outputs);
+const client = generateClient<Schema>({ authMode: 'userPool' });
 
-function App() {
-  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
+export default function App() {
+  const [feedbacks, setFeedbacks] = useState<Schema['Feedback']['type'][]>([]);
+  const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
-  // Fetch feedback on load
-  useEffect(() => {
-    fetch('/api/feedback')
-      .then((res) => res.json())
-      .then(setFeedbacks)
-      .catch((err) => console.error('Error fetching feedbacks:', err));
-  }, []);
-
-  // Post feedback
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const res = await fetch('/api/feedback', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, category, description }),
-    });
-
-    if (res.ok) {
-      // Refresh the list after adding
-      const updatedRes = await fetch('/api/feedback');
-      const updatedFeedbacks = await updatedRes.json();
-      setFeedbacks(updatedFeedbacks);
-      setTitle('');
-      setCategory('');
-      setDescription('');
-    }
+  const fetchFeedbacks = async () => {
+    const { data } = await client.models.Feedback.list();
+    setFeedbacks(data);
   };
 
-  return (
-    <div className="p-4 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Feedback Board</h1>
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    await client.models.Feedback.create({ name, description });
+    setName('');
+    setDescription('');
+    fetchFeedbacks();
+  };
 
-      <form onSubmit={handleSubmit} className="mb-6">
+  useEffect(() => {
+    fetchFeedbacks();
+  }, []);
+
+  return (
+    <div className="p-6 max-w-xl mx-auto space-y-6">
+      <h1 className="text-2xl font-bold">Amplify Feedback</h1>
+
+      <form onSubmit={handleSubmit} className="space-y-2">
         <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title..."
-          className="border p-2 rounded w-full mb-2"
-        />
-        <input
-          type="text"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          placeholder="Category..."
-          className="border p-2 rounded w-full mb-2"
+          className="border p-2 rounded w-full"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <textarea
+          className="border p-2 rounded w-full"
+          placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description..."
-          className="border p-2 rounded w-full mb-2"
         />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
+        <button className="bg-blue-600 text-white py-2 px-4 rounded">
           Submit
         </button>
       </form>
 
-      <ul>
+      <ul className="space-y-4">
         {feedbacks.map((f) => (
-          <li key={f.id} className="border-b py-2">
-            <h3 className="font-bold">{f.title}</h3>
-            <p className="text-sm text-gray-600">{f.category}</p>
+          <li key={f.id} className="border p-4 rounded">
+            <h3 className="font-bold">{f.name}</h3>
             <p>{f.description}</p>
-            <p className="text-xs text-gray-500">
-              {f.upvotes} upvotes • {f.commentsCount} comments • {f.status}
-            </p>
           </li>
         ))}
       </ul>
     </div>
   );
 }
-
-export default App;
