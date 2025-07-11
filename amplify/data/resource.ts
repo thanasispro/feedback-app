@@ -11,8 +11,8 @@ const schema = a.schema({
   Feedback: a.model({
     title: a.string().required(),
     description: a.string().required(),
-    category: a.string(),
-    status: a.string(),
+    category: a.enum(['UI', 'UX', 'Enhancement', 'Feature', 'Bug']),
+    status: a.enum(['Suggestion', 'Planned', 'InProgress', 'Live']),
     upvotes: a.integer().default(0),
     comments: a.hasMany('Comment', 'feedbackId'),
   }).authorization((allow) => [allow.owner()]),
