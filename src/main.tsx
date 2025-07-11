@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.tsx'
 import { Authenticator } from "@aws-amplify/ui-react";
 
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
      <Authenticator>

@@ -2,6 +2,7 @@ import React from "react";
 import clsx from "clsx";
 
 interface TextFieldProps {
+  name?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
@@ -15,10 +16,12 @@ export const TextField = ({
   placeholder,
   error,
   isActive,
+  name = "",
 }: TextFieldProps) => {
   return (
     <div className="flex flex-col gap-1">
       <input
+        name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
