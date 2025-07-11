@@ -18,8 +18,8 @@ export function useFeedbacks() {
         id: f.id,
         title: f.title ?? '',
         description: f.description ?? '',
-        category: f.category ?? '',
-        status: f.status ?? '',
+        category: f.category ?? 'UI',
+        status: f.status ?? 'Suggestion',
         upvotes: f.upvotes ?? 0,
         comments: []
       }));
