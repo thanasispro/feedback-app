@@ -12,7 +12,7 @@ export const Dropdown = ({ value, options, onSelect }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="relative w-full max-w-sm">
+    <div className="relative w-full">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className={clsx(
@@ -24,22 +24,11 @@ export const Dropdown = ({ value, options, onSelect }: DropdownProps) => {
         )}
       >
         <span>{value}</span>
-        <span className="text-primary-blue text-base">
-          <svg
-            className="w-2 h-1 text-primary-blue"
-            viewBox="0 0 10 6"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1L5 5L9 1"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
+        <img 
+          src="/src/assets/shared/icon-arrow-down.svg" 
+          alt="Expand" 
+          className="w-[10px] h-[6px]" 
+        />
       </button>
 
       {isOpen && (
