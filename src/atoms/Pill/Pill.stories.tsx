@@ -44,7 +44,6 @@ export const SimplePill = () => {
       label="Feature"
       isActive={active}
       onClick={() => setActive(!active)}
-      icon={null}
     />
   );
 };
