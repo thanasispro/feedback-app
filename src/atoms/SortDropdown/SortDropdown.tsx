@@ -22,20 +22,11 @@ export const SortDropdown = ({ value, options, onSelect }: SortDropdownProps) =>
             {value}
           </span>
         </span>
-        <svg
-          className="w-[10px] h-[6px] text-neutral-gray-400"
-          viewBox="0 0 10 6"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d={isOpen ? "M1 5L5 1L9 5" : "M1 1L5 5L9 1"}
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <img 
+          src={isOpen ? "/src/assets/shared/icon-arrow-up.svg" : "/src/assets/shared/icon-arrow-down.svg"} 
+          alt={isOpen ? "Collapse" : "Expand"} 
+          className="w-[10px] h-[6px]" 
+        />
       </button>
 
       {isOpen && (
