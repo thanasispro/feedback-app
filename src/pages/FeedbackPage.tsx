@@ -30,7 +30,7 @@ const useIsMobile = () => {
 };
 
 export const FeedbackPage = () => {
-  const { feedbacks, addFeedback, updateFeedback, deleteFeedback } =
+  const { feedbacks, addFeedback, updateFeedback, deleteFeedback, toggleUpvote } =
     useFeedbacks();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -52,16 +52,21 @@ export const FeedbackPage = () => {
     return selectedFilters.includes(feedback.category);
   });
 
-  const sortedFeedbacks = [...filteredFeedbacks].sort((a, b) => {
+  const feedbacksWithCounts = filteredFeedbacks.map(fb => ({
+    ...fb,
+    commentsCount: fb.comments?.length ?? 0,
+  }));
+
+  const sortedFeedbacks = [...feedbacksWithCounts].sort((a, b) => {
     switch (sortBy) {
       case "Most Upvotes":
         return b.upvotes - a.upvotes;
       case "Least Upvotes":
         return a.upvotes - b.upvotes;
       case "Most Comments":
-        return (b.comments?.length || 0) - (a.comments?.length || 0);
+        return b.commentsCount - a.commentsCount;
       case "Least Comments":
-        return (a.comments?.length || 0) - (b.comments?.length || 0);
+        return a.commentsCount - b.commentsCount;
       default:
         return 0;
     }
@@ -107,6 +112,10 @@ export const FeedbackPage = () => {
       setEditing(null);
       setModalOpen(false);
     }
+  };
+
+  const handleUpvote = (feedbackId: string) => {
+    toggleUpvote(feedbackId);
   };
 
   return (
@@ -214,7 +223,7 @@ export const FeedbackPage = () => {
             ) : (
               <FeedbackList
                 feedbacks={sortedFeedbacks}
-                onEdit={handleEditFeedback}
+                onUpvote={handleUpvote}
               />
             )}
           </div>

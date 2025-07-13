@@ -24,6 +24,6 @@ export interface User {
     status: Status;
     upvotes: number;
     comments?: Comment[];
+    isUpvoted?: boolean;
   }
-  export type FeedbackInput = Omit<Feedback, 'id' | 'upvotes' | 'comments'>;
-  
+  export type FeedbackInput = Pick<Feedback, 'title' | 'description' | 'category' | 'status'>;  

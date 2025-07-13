@@ -11,6 +11,17 @@ interface PillProps {
   className?: string;
 }
 
+interface UpArrowIconProps {
+  color: string;
+  className?: string;
+}
+
+export const UpArrowIcon = ({ color, className }: UpArrowIconProps) => (
+  <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <path d="M1 6l4-4 4 4" stroke={color} strokeWidth="2" fill="none" fillRule="evenodd" />
+  </svg>
+);
+
 export const Pill: React.FC<PillProps> = ({
   label,
   isActive = false,
@@ -38,7 +49,7 @@ export const Pill: React.FC<PillProps> = ({
     <button
       onClick={onClick}
       className={clsx(
-        'flex items-center justify-center gap-2',
+        'flex items-center justify-center gap-1',
         variant === 'upvote' && 'md:flex-col',
         'rounded-[10px] px-4 py-2 text-[13px] leading-[19px] font-semibold cursor-pointer transition-all duration-150',
         className
@@ -59,19 +70,13 @@ export const Pill: React.FC<PillProps> = ({
       }}
     >
       {variant === 'upvote' && (
-        <span
+       <UpArrowIcon
+          color={iconColor}
           className={clsx(
             'transition-colors duration-150',
             animate && 'animate-scaleUp'
           )}
-          style={{ color: iconColor }}
-        >
-          <img 
-            src={upArrowIcon}
-            alt="Upvote" 
-            className="w-4 h-4"
-          />
-        </span>
+        />
       )}
       <span>{label}</span>
     </button>
