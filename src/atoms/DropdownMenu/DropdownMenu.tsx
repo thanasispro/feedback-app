@@ -1,4 +1,5 @@
-import clsx from "clsx";
+import clsx from 'clsx';
+import iconCheck from "@assets/shared/icon-check.svg";
 
 interface DropdownMenuProps {
   value: string;
@@ -6,7 +7,11 @@ interface DropdownMenuProps {
   onSelect: (val: string) => void;
 }
 
-export const DropdownMenu = ({ value, options, onSelect }: DropdownMenuProps) => {
+export const DropdownMenu = ({
+  value,
+  options,
+  onSelect,
+}: DropdownMenuProps) => {
   return (
     <ul className="absolute z-10 mt-2 w-full rounded-md bg-neutral-white shadow-xl">
       {options.map((option, index) => {
@@ -24,11 +29,7 @@ export const DropdownMenu = ({ value, options, onSelect }: DropdownMenuProps) =>
           >
             <span>{option}</span>
             {isSelected && (
-              <img 
-                src="/src/assets/shared/icon-check.svg" 
-                alt="Selected" 
-                className="w-4 h-4" 
-              />
+              <img src={iconCheck} alt="Selected" className="w-4 h-4" />
             )}
           </li>
         );

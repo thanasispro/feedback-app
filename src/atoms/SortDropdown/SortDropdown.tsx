@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { DropdownMenu } from "../DropdownMenu/DropdownMenu";
+import iconArrowUp from "@/assets/shared/icon-arrow-up.svg";
+import iconArrowDown from "@/assets/shared/icon-arrow-down.svg";
 
 interface SortDropdownProps {
   value: string;
@@ -23,7 +25,7 @@ export const SortDropdown = ({ value, options, onSelect }: SortDropdownProps) =>
           </span>
         </span>
         <img 
-          src={isOpen ? "/src/assets/shared/icon-arrow-up.svg" : "/src/assets/shared/icon-arrow-down.svg"} 
+          src={isOpen ? iconArrowUp : iconArrowDown} 
           alt={isOpen ? "Collapse" : "Expand"} 
           className="w-[10px] h-[6px]" 
         />

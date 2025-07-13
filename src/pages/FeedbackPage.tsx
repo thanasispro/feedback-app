@@ -11,6 +11,8 @@ import { MobileSidebar } from "@/components/MobileSidebar";
 import { FilterSection } from "@/components/FilterSection";
 import { SuggestionsInfo } from "@/components/SuggestionsInfo";
 import { AppInfoCard } from "@/components/AppInfoCard";
+import iconSuggestions from "@/assets/suggestions/icon-suggestions.svg";
+import iconIllustrationEmpty from "@/assets/suggestions/illustration-empty.svg";
 
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -157,7 +159,7 @@ export const FeedbackPage = () => {
           <div className="bg-neutral-gray-300 px-6 py-4 flex items-center justify-between md:rounded-[10px]">
             <div className="flex items-center gap-4">
               <img
-                src="/src/assets/suggestions/icon-suggestions.svg"
+                src={iconSuggestions}
                 alt="Suggestions"
                 className="w-6 h-6 hidden md:block"
               />
@@ -181,7 +183,7 @@ export const FeedbackPage = () => {
             {sortedFeedbacks.length === 0 ? (
               <div className="text-center py-12 bg-white rounded-[10px]">
                 <img
-                  src="/src/assets/suggestions/illustration-empty.svg"
+                  src={iconIllustrationEmpty}
                   alt="No feedback"
                   className="mx-auto mb-6 w-32 h-32"
                 />

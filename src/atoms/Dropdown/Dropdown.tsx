@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { DropdownMenu } from "../DropdownMenu/DropdownMenu";
+import iconArrowDown  from "@assets/shared/icon-arrow-down.svg";
 
 interface DropdownProps {
   value: string;
@@ -67,11 +68,7 @@ export const Dropdown = ({
           )}
         >
           <span>{value}</span>
-          <img
-            src="/src/assets/shared/icon-arrow-down.svg"
-            alt="Expand"
-            className="w-[10px] h-[6px]"
-          />
+          <img src={iconArrowDown} alt="Expand" className="w-[10px] h-[6px]" />
         </button>
 
         {isOpen && (

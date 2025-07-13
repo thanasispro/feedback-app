@@ -1,3 +1,5 @@
+import tabletHeader from '@/assets/suggestions/tablet/background-header.png';
+
 interface AppInfoCardProps {
   appName: string;
   pageName: string;
@@ -8,7 +10,7 @@ export const AppInfoCard = ({ appName, pageName }: AppInfoCardProps) => {
     <div 
       className="lg:h-[137px] bg-gradient-to-r from-purple-500 to-pink-500 rounded-[10px] flex items-end p-6 bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: "url('/src/assets/suggestions/tablet/background-header.png')",
+        backgroundImage: `url(${tabletHeader})`,
       }}
     >
       <div className="flex flex-col">
