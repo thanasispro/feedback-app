@@ -1,3 +1,7 @@
+import backgroundHeader from '@/assets/suggestions/mobile/background-header.png';
+import iconClose from '@/assets/shared/mobile/icon-close.svg';
+import iconHamburger from '@/assets/shared/mobile/icon-hamburger.svg';
+
 interface MobileHeaderProps {
   appName: string;
   pageName: string;
@@ -22,7 +26,7 @@ export const MobileHeader = ({
       className="md:hidden w-full h-[72px] bg-neutral-gray-300 flex items-center justify-between px-4 bg-cover"
       style={{
         backgroundImage:
-          "url('/src/assets/suggestions/mobile/background-header.png')",
+          `url(${backgroundHeader})`,
       }}
     >
       <div className="flex flex-col">
@@ -42,8 +46,8 @@ export const MobileHeader = ({
         <img
           src={
             isMenuOpen
-              ? "/src/assets/shared/mobile/icon-close.svg"
-              : "/src/assets/shared/mobile/icon-hamburger.svg"
+              ? iconClose
+              : iconHamburger
           }
           alt={isMenuOpen ? "Close" : "Menu"}
           className="w-5 h-4"

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import upArrowIcon from '@/assets/shared/icon-arrow-up.svg';
+
 
 interface PillProps {
   label: string | number;
@@ -65,7 +67,7 @@ export const Pill: React.FC<PillProps> = ({
           style={{ color: iconColor }}
         >
           <img 
-            src="/src/assets/shared/icon-arrow-up.svg" 
+            src={upArrowIcon}
             alt="Upvote" 
             className="w-4 h-4"
           />
