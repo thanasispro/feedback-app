@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import upArrowIcon from '@/assets/shared/icon-arrow-up.svg';
-
 
 interface PillProps {
   label: string | number;
