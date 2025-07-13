@@ -97,15 +97,6 @@ export const FeedbackPage = () => {
     }
   };
 
-  const handleEditFeedback = (feedback: Feedback) => {
-    if (isMobile) {
-      setEditing(feedback);
-      setModalOpen(true);
-    } else {
-      navigate(`/feedback/edit/${feedback.id}`);
-    }
-  };
-
   const handleDelete = () => {
     if (editing) {
       deleteFeedback(editing.id);
