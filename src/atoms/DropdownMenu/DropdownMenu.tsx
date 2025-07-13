@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import iconCheck from "@assets/shared/icon-check.svg";
+import iconCheck from "@/assets/shared/icon-check.svg";
 
 interface DropdownMenuProps {
   value: string;

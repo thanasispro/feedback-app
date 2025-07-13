@@ -18,10 +18,17 @@ const statusOptions = [
 export const FeedbackFormPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { feedbacks, addFeedback, updateFeedback } = useFeedbacks();
+  const { feedbacks, addFeedback, updateFeedback, deleteFeedback } = useFeedbacks();
   
   const editingFeedback = id ? feedbacks.find(f => f.id === id) : null;
   const isEditing = Boolean(editingFeedback);
+
+  const handleDelete = () => {
+    if (editingFeedback) {
+      deleteFeedback(editingFeedback.id);
+      navigate('/');
+    }
+  };
 
   const [formData, setFormData] = useState({
     title: "",
@@ -191,18 +198,30 @@ export const FeedbackFormPage = () => {
               />
             )}
             
-            <div className="flex justify-end gap-2 mt-4 md:mt-6">
-              <Button
-                text="Cancel"
-                variant="ghost"
-                color="gray"
-                onClick={() => navigate('/')}
-              />
-              <Button 
-                text={isEditing ? "Save Changes" : "Add Feedback"} 
-                onClick={handleSubmit} 
-              />
-            </div>
+             
+            <div className="flex flex-col md:flex-row justify-between gap-2 mt-4 md:mt-6">
+              {isEditing && (
+                <Button
+                  text="Delete"
+                  variant="primary"
+                  color="orange"
+                  onClick={handleDelete}
+                  className="md:mr-auto"
+                />
+              )}
+              <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto md:justify-end">
+                <Button
+                  text="Cancel"
+                  variant="primary"
+                  color="gray"
+                  onClick={() => navigate('/')}
+                />
+                <Button 
+                  text={isEditing ? "Save Changes" : "Add Feedback"} 
+                  onClick={handleSubmit} 
+                />
+              </div>
+              </div>
           </div>
         </div>
       </div>

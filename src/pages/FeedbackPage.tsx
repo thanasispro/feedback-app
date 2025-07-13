@@ -30,7 +30,8 @@ const useIsMobile = () => {
 };
 
 export const FeedbackPage = () => {
-  const { feedbacks, addFeedback, updateFeedback } = useFeedbacks();
+  const { feedbacks, addFeedback, updateFeedback, deleteFeedback } =
+    useFeedbacks();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [editing, setEditing] = useState<Feedback | null>(null);
@@ -100,10 +101,20 @@ export const FeedbackPage = () => {
     }
   };
 
+  const handleDelete = () => {
+    if (editing) {
+      deleteFeedback(editing.id);
+      setEditing(null);
+      setModalOpen(false);
+    }
+  };
+
   return (
-    <div className={`min-h-screen bg-neutral-gray-100 
+    <div
+      className={`min-h-screen bg-neutral-gray-100 
       lg:py-20 lg:px-15
-      md:p-10`}>
+      md:p-10`}
+    >
       <MobileHeader
         appName="Frontend Mentor"
         pageName="Feedback Board"
@@ -217,6 +228,7 @@ export const FeedbackPage = () => {
             setModalOpen(false);
             setEditing(null);
           }}
+          onDelete={handleDelete}
           onSave={handleSave}
           initialData={editing}
         />

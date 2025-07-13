@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { DropdownMenu } from "../DropdownMenu/DropdownMenu";
-import iconArrowDown  from "@assets/shared/icon-arrow-down.svg";
+import iconArrowDown  from "@/assets/shared/icon-arrow-down.svg";
 
 interface DropdownProps {
   value: string;

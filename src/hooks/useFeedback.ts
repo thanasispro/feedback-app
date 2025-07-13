@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '../../amplify/data/resource';
-import type { Feedback, FeedbackInput } from '../types';
+import { useState, useEffect } from "react";
+import { generateClient } from "aws-amplify/data";
+import type { Schema } from "../../amplify/data/resource";
+import type { Feedback, FeedbackInput } from "../types";
 
-const client = generateClient<Schema>({ authMode: 'userPool' });
+const client = generateClient<Schema>({ authMode: "userPool" });
 
 export function useFeedbacks() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
@@ -14,15 +14,17 @@ export function useFeedbacks() {
     // Filter and map out nulls and sanitize structure
     const cleaned = (data ?? [])
       .filter((f): f is NonNullable<typeof f> => !!f && !!f.id)
-      .map((f): Feedback => ({
-        id: f.id,
-        title: f.title ?? '',
-        description: f.description ?? '',
-        category: f.category ?? 'UI',
-        status: f.status ?? 'Suggestion',
-        upvotes: f.upvotes ?? 0,
-        comments: []
-      }));
+      .map(
+        (f): Feedback => ({
+          id: f.id,
+          title: f.title ?? "",
+          description: f.description ?? "",
+          category: f.category ?? "UI",
+          status: f.status ?? "Suggestion",
+          upvotes: f.upvotes ?? 0,
+          comments: [],
+        })
+      );
 
     setFeedbacks(cleaned);
   };
@@ -44,9 +46,14 @@ export function useFeedbacks() {
     await fetchFeedbacks();
   };
 
+  const deleteFeedback = async (id: string) => {
+    await client.models.Feedback.delete({ id });
+    await fetchFeedbacks();
+  };
+
   useEffect(() => {
     fetchFeedbacks();
   }, []);
 
-  return { feedbacks, addFeedback, updateFeedback };
+  return { feedbacks, addFeedback, updateFeedback, deleteFeedback };
 }

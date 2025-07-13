@@ -8,6 +8,7 @@ interface FeedbackModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (data: Omit<Feedback, "id" | "upvotes" | "comments">) => void;
+  onDelete?: () => void;
   initialData?: Feedback | null;
 }
 
@@ -24,6 +25,7 @@ export const FeedbackModal = ({
   isOpen,
   onClose,
   onSave,
+  onDelete,
   initialData,
 }: FeedbackModalProps) => {
   const [formData, setFormData] = useState({
@@ -107,11 +109,12 @@ export const FeedbackModal = ({
     }
 
     setErrors(newErrors);
-    return !Object.values(newErrors).some(error => error !== "");
+    return !Object.values(newErrors).some((error) => error !== "");
   };
 
   const currentStatusLabel =
-    statusOptions.find((o) => o.value === formData.status)?.label || "Suggestion";
+    statusOptions.find((o) => o.value === formData.status)?.label ||
+    "Suggestion";
 
   if (!isOpen) return null;
 
@@ -122,8 +125,8 @@ export const FeedbackModal = ({
 
     onSave({
       ...formData,
-      category: formData.category as Feedback['category'],
-      status: formData.status as Feedback['status'],
+      category: formData.category as Feedback["category"],
+      status: formData.status as Feedback["status"],
     });
     onClose();
   };
@@ -146,7 +149,7 @@ export const FeedbackModal = ({
             error={errors.title}
           />
 
-           <Dropdown
+          <Dropdown
             value={formData.category || "Select category"}
             options={categoryOptions}
             onSelect={handleCategorySelect}
@@ -155,7 +158,7 @@ export const FeedbackModal = ({
             required
             error={errors.category}
           />
-          
+
           <TextField
             name="description"
             value={formData.description}
@@ -166,9 +169,7 @@ export const FeedbackModal = ({
             required
             error={errors.description}
           />
-          
-         
-          
+
           {initialData && (
             <Dropdown
               value={currentStatusLabel}
@@ -178,15 +179,24 @@ export const FeedbackModal = ({
               description="Change feature state"
             />
           )}
-          
+
           <div className="flex justify-end gap-2 mt-4">
+            <div className="flex flex-col gap-2 mt-4">
+            <Button text="Save" onClick={handleSubmit} />
             <Button
               text="Cancel"
-              variant="ghost"
+              variant="primary"
               color="gray"
               onClick={onClose}
             />
-            <Button text="Save" onClick={handleSubmit} />
+            {initialData && onDelete && (
+              <Button
+                text="Delete"
+                variant="primary"
+                onClick={onDelete}
+              />
+            )}
+          </div>
           </div>
         </div>
       </div>
