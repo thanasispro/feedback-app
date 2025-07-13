@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { FiChevronUp } from 'react-icons/fi'; // default icon, can be replaced or omitted
 
 interface PillProps {
   label: string | number;
   isActive?: boolean;
   onClick: () => void;
-  icon?: React.ReactNode;
+  variant?: 'default' | 'upvote';
   className?: string;
 }
 
@@ -14,7 +13,7 @@ export const Pill: React.FC<PillProps> = ({
   label,
   isActive = false,
   onClick,
-  icon = <FiChevronUp size={16} />,
+  variant = 'default',
   className,
 }) => {
   const [animate, setAnimate] = useState(false);
@@ -37,8 +36,9 @@ export const Pill: React.FC<PillProps> = ({
     <button
       onClick={onClick}
       className={clsx(
-        'flex items-center justify-center gap-2 md:flex-col',
-        'rounded-[10px] p-2 text-[13px] leading-[19px] font-semibold cursor-pointer transition-all duration-150',
+        'flex items-center justify-center gap-2',
+        variant === 'upvote' && 'md:flex-col',
+        'rounded-[10px] px-4 py-2 text-[13px] leading-[19px] font-semibold cursor-pointer transition-all duration-150',
         className
       )}
       style={{
@@ -56,7 +56,7 @@ export const Pill: React.FC<PillProps> = ({
         }
       }}
     >
-      {icon && (
+      {variant === 'upvote' && (
         <span
           className={clsx(
             'transition-colors duration-150',
@@ -64,7 +64,11 @@ export const Pill: React.FC<PillProps> = ({
           )}
           style={{ color: iconColor }}
         >
-          {icon}
+          <img 
+            src="/src/assets/shared/icon-arrow-up.svg" 
+            alt="Upvote" 
+            className="w-4 h-4"
+          />
         </span>
       )}
       <span>{label}</span>
